@@ -4,19 +4,19 @@ pipeline {
         stage('Build stage'){
             steps {
                bat 'echo Build stage'
-			   bat 'mvn clean'
+			   bat 'mvn -f AutomationMaven/pom.xml clean'
             }
         }
         stage('Complie stage'){
             steps {
                bat 'echo compile stage'
-			   bat 'mvn compile'
+			   bat 'mvn -f AutomationMaven/pom.xml compile'
             }
         }
         stage('Test stage'){
             steps {
                bat 'echo Test stage'
-			   bat 'mvn test'
+			   bat 'mvn -f AutomationMaven/pom.xml test'
             }
         }
         stage('deploy Stage'){
