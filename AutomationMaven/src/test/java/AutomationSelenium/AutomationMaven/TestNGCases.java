@@ -1,36 +1,31 @@
 package AutomationSelenium.AutomationMaven;
 
+import AutomationSelenium.AutomationMaven.pages.*;
+import Utils.TestContextSetup;
 import org.testng.annotations.Test;
 
-import AutomationSelenium.AutomationMaven.pages.CartPage;
-import AutomationSelenium.AutomationMaven.pages.HomePage;
-import AutomationSelenium.AutomationMaven.pages.LoginPage;
-import AutomationSelenium.AutomationMaven.pages.PlaceOrderPage;
-import AutomationSelenium.AutomationMaven.pages.ProductPage;
-import AutomationSelenium.AutomationMaven.pages.SignUp;
-import Resources.DriverSetup;
-
 import org.testng.annotations.BeforeTest;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 
+import java.io.IOException;
 
-public class LoginTest{
-	public WebDriver driver;
-	public WebDriverWait wait;
+
+public class TestNGCases{
 	public LoginPage Ln;
 	public SignUp signup;
 	public HomePage homepage;
 	public ProductPage productpage;
 	public CartPage cartpage;
 	public PlaceOrderPage placeorder;
-	
-	
-  @Test(priority=2)
+	public TestContextSetup testContextSetup;
+//	public LoginTest(TestContextSetup testContextSetup){
+//		this.testContextSetup=testContextSetup;
+//	}
+	@Test(priority=2)
   public void Login() throws Exception {
+		homepage=testContextSetup.pageObjectManager.getHomePage();
+		Ln = testContextSetup.pageObjectManager.getLoginPage();
 	  homepage.Login.click();
 	  Thread.sleep(2000);
 	  Ln.Txt_Username.sendKeys("Rajpal");
@@ -40,42 +35,40 @@ public class LoginTest{
 	  Assert.assertEquals(homepage.Welcome_User.getText(), "Welcome Rajpal");
 	  
   }
-  
-  @Test(priority=1,enabled=false)
+	@Test(priority=1,enabled=false)
   public void SignUp() throws Exception {
 	  homepage.SignUp.click();
 	  Thread.sleep(2000);
+	  signup= testContextSetup.pageObjectManager.getSignUp();
 	  signup.Txt_SignUsername.sendKeys("AXCV");
 	  signup.Txt_SignPassword.sendKeys("AXCD");
 	  signup.Btn_Sign_up.click();
 	  Thread.sleep(2000);
-	  Assert.assertEquals(driver.switchTo().alert().getText(), "Sign up successful.");
-	  driver.switchTo().alert().accept();
+	  Assert.assertEquals(testContextSetup.genericUtils.getAlertText(), "Sign up successful.");
+	  testContextSetup.genericUtils.AcceptAlert();
 	  
   }
-  
-  @Test(priority=3,enabled=true)
+	@Test(priority=3,enabled=true)
   public void AddtoCart() throws Exception {
-	  
+	  productpage=testContextSetup.pageObjectManager.getProductPage();
 	 homepage.Product("Samsung galaxy s6").click();
 	 Assert.assertEquals(productpage.h_ProductName.getText(),"Samsung galaxy s6");
 	 productpage.Btn_AddtoCart.click();
 	 Thread.sleep(2000);
-	 Assert.assertEquals(driver.switchTo().alert().getText(),"Product added.");
-	 driver.switchTo().alert().accept();
-	 
-	  
+	 Assert.assertEquals(testContextSetup.genericUtils.getAlertText(),"Product added.");
+	 testContextSetup.genericUtils.AcceptAlert();
   }
-  
-  @Test(priority=4,enabled=true)
+	@Test(priority=4,enabled=true)
   public void PlaceOrder() throws Exception{
+		cartpage=testContextSetup.pageObjectManager.getCartPage();
+		placeorder=testContextSetup.pageObjectManager.getPlaceOrderPage();
 	  homepage.Cart.click();
-	  wait.until(ExpectedConditions.visibilityOf(cartpage.Btn_PlaceOrder));
-	  wait.until(ExpectedConditions.visibilityOf(cartpage.Lbl_Total));
+	  testContextSetup.genericUtils.waitUntilVisible(cartpage.Btn_PlaceOrder,30);
+	  testContextSetup.genericUtils.waitUntilVisible(cartpage.Lbl_Total,30);
 	  int Price=cartpage.ProductPrice("Samsung galaxy s6");
 	  System.out.println(Price);
 	  cartpage.Btn_PlaceOrder.click();
-	  wait.until(ExpectedConditions.visibilityOf(placeorder.lbl_Total));
+	  testContextSetup.genericUtils.waitUntilVisible(placeorder.lbl_Total,30);
 	  
 	  String lbl_total=placeorder.lbl_Total.getText();
 	  String[] arr_lbltotal=lbl_total.split(" ",2);
@@ -90,30 +83,19 @@ public class LoginTest{
 	  placeorder.txtbox_Month.sendKeys("11");
 	  placeorder.txtbox_Year.sendKeys("2024");
 	  placeorder.btn_Purchase.click();
-	  wait.until(ExpectedConditions.visibilityOf(placeorder.lbl_ThankYou));
+	  testContextSetup.genericUtils.waitUntilVisible(placeorder.lbl_ThankYou,30);
 	  placeorder.btn_OK.click();
-	  wait.until(ExpectedConditions.elementToBeClickable(placeorder.btn_Close)).click();
+	  testContextSetup.genericUtils.waitUntilVisible(placeorder.btn_Close,30).click();
 	  
   }
-  
-  @BeforeTest
-  public void beforeTest() {
-	driver=DriverSetup.driverSetup("Chrome");
-	   Ln=new LoginPage(driver);
-	   signup=new SignUp(driver);
-	   homepage=new HomePage(driver);
-	   productpage=new ProductPage(driver);
-	   cartpage=new CartPage(driver);
-	   placeorder=new PlaceOrderPage(driver);
-	 driver.get("https://www.demoblaze.com/index.html");
-	 driver.manage().window().maximize();
-	 wait=new WebDriverWait(driver, 30);
-	  
-  }
-
-  @AfterTest
-  public void afterTest() {
-	  //driver.quit();
+	@BeforeTest
+  public void LaunchApplication() throws IOException {
+		testContextSetup=new TestContextSetup();
+	 testContextSetup.genericUtils.openUrl();
+	  }
+	@AfterTest
+  public void CloseBrowsers() {
+	  testContextSetup.genericUtils.driverQuit();
   }
 
 }

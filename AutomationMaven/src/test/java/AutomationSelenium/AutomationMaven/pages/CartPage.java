@@ -10,8 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 public class CartPage {
-	WebDriver driver;
-
+	public WebDriver driver;
+	public CartPage(WebDriver driver) {
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
 	  
 	  @FindBy(xpath="//button[text()='Place Order']")
 	  public WebElement Btn_PlaceOrder;
@@ -50,10 +53,5 @@ public class CartPage {
 		return Price_Rs;
 	  }
 	  
-	  public CartPage(WebDriver driver) {
-		  this.driver=driver;
-	      //This initElements method will create all WebElements
 
-	      PageFactory.initElements(driver, this);
-	  }
 }

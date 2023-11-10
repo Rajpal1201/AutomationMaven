@@ -12,8 +12,11 @@ import org.openqa.selenium.support.PageFactory;
  * Sample page
  */
 public class HomePage {
-	WebDriver driver;
-
+	public WebDriver driver;
+  public HomePage(WebDriver driver) {
+    this.driver=driver;
+    PageFactory.initElements(driver, this);
+  }
   
   @FindBy(xpath="//a[@href='index.html']")
   public WebElement Home;
@@ -35,10 +38,5 @@ public class HomePage {
 	  return driver.findElement(By.linkText(linkTxt));
   }
   
-  public HomePage(WebDriver driver) {
-	  this.driver=driver;
-      //This initElements method will create all WebElements
 
-      PageFactory.initElements(driver, this);
-  }
 }

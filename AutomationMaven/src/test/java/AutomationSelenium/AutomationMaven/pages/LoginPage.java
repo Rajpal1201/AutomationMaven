@@ -9,7 +9,12 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 	
-	WebDriver driver;
+	public WebDriver driver;
+	public LoginPage(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
 	
 	@FindBy(id="loginusername")
 	public WebElement Txt_Username;
@@ -24,14 +29,7 @@ public class LoginPage {
 	@FindBy(xpath="//button[@data-dismiss='modal']")
 	public WebElement Btn_Close;
 	
-	public LoginPage(WebDriver driver)
-	{
-		this.driver=driver;
 
-        //This initElements method will create all WebElements
-
-        PageFactory.initElements(driver, this);
-	}
 			
 
 }

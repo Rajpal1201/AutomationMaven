@@ -7,21 +7,18 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProductPage {
 
-	WebDriver driver;
-
-	@FindBy(xpath="//h2[@class='name']")
-	public WebElement h_ProductName;
-	
-	@FindBy(xpath="//a[@onclick='addToCart(1)']")
-	public WebElement Btn_AddtoCart;
-	
+	public WebDriver driver;
 	public ProductPage(WebDriver driver)
 	{
 		this.driver=driver;
-
-        //This initElements method will create all WebElements
-
-        PageFactory.initElements(driver, this);
+		PageFactory.initElements(driver, this);
 	}
+	@FindBy(xpath="//h2[@class='name']")
+	public WebElement h_ProductName;
+	
+	@FindBy(xpath="//a[contains(@onclick,'addToCart')]")
+	public WebElement Btn_AddtoCart;
+	
+
 			
 }

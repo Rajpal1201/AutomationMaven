@@ -8,9 +8,12 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 public class SignUp {
-	
-WebDriver driver;
-	
+    public WebDriver driver;
+	public SignUp(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
 	@FindBy(id="sign-username")
 	public WebElement Txt_SignUsername;
 	
@@ -23,17 +26,5 @@ WebDriver driver;
 	
 	@FindBy(xpath="//button[@class='btn btn-secondary']")
 	public WebElement Btn_SignClose;
-	
-	
-	
-	public SignUp(WebDriver driver)
-	{
-		this.driver=driver;
-
-        //This initElements method will create all WebElements
-
-        PageFactory.initElements(driver, this);
-	}
-			
 
 }

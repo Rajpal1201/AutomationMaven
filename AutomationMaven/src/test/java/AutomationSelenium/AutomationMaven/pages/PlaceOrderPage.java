@@ -8,8 +8,11 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class PlaceOrderPage {
-	WebDriver driver;
-
+	public WebDriver driver;
+	public PlaceOrderPage(WebDriver driver) {
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
 	  
 	  @FindBy(id="totalm")
 	  public WebElement lbl_Total;
@@ -43,11 +46,5 @@ public class PlaceOrderPage {
 	  
 	  @FindBy(xpath="//button[text()='OK']")
 	  public WebElement btn_OK;
-	  
-	  public PlaceOrderPage(WebDriver driver) {
-		  this.driver=driver;
-	      //This initElements method will create all WebElements
 
-	      PageFactory.initElements(driver, this);
-	  }
 	}
