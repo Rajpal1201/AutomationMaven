@@ -1,15 +1,15 @@
 package stepDefinition;
 
-import AutomationSelenium.AutomationMaven.pages.*;
+import AutomationSelenium.AutomationMaven.pages.HomePage;
+import AutomationSelenium.AutomationMaven.pages.LoginPage;
+import AutomationSelenium.AutomationMaven.pages.ProductPage;
+import AutomationSelenium.AutomationMaven.pages.SignUp;
 import Utils.TestContextSetup;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.IOException;
-import java.time.Duration;
 
 public class StepDefi_homePage {
     public LoginPage Ln;
@@ -20,20 +20,19 @@ public class StepDefi_homePage {
 
     public StepDefi_homePage(TestContextSetup testContextSetup){
         this.testContextSetup= testContextSetup;
-    }
-
-    @Given("User is on home page of the site")
-    public void user_is_on_home_page_of_the_site() throws IOException {
         Ln=testContextSetup.pageObjectManager.getLoginPage();
         signup=testContextSetup.pageObjectManager.getSignUp();
         homepage=testContextSetup.pageObjectManager.getHomePage();
         productpage=testContextSetup.pageObjectManager.getProductPage();
+    }
+
+    @Given("User is on home page of the site")
+    public void user_is_on_home_page_of_the_site() throws IOException {
         testContextSetup.genericUtils.openUrl();
     }
 
     @And("User adds the product into the cart")
     public void user_adds_the_product_into_the_cart() throws InterruptedException {
-        // Write code here that turns the phrase above into concrete actions
         homepage.Product("Samsung galaxy s6").click();
         Assert.assertEquals(productpage.h_ProductName.getText(),"Samsung galaxy s6");
         productpage.Btn_AddtoCart.click();

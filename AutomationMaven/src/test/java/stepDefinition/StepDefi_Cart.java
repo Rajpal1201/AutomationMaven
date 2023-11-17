@@ -1,12 +1,11 @@
 package stepDefinition;
 
-import AutomationSelenium.AutomationMaven.pages.*;
+import AutomationSelenium.AutomationMaven.pages.CartPage;
+import AutomationSelenium.AutomationMaven.pages.HomePage;
+import AutomationSelenium.AutomationMaven.pages.PlaceOrderPage;
 import Utils.TestContextSetup;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.util.List;
@@ -19,13 +18,12 @@ public class StepDefi_Cart {
 
     public StepDefi_Cart(TestContextSetup testContextSetup){
         this.testContextSetup=testContextSetup;
-    }
-    @And("User checks out the order")
-    public void user_checks_out_the_order() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
         cartpage=testContextSetup.pageObjectManager.getCartPage();
         placeorder=testContextSetup.pageObjectManager.getPlaceOrderPage();
         homepage=testContextSetup.pageObjectManager.getHomePage();
+    }
+    @And("User checks out the order")
+    public void user_checks_out_the_order() throws Exception {
         homepage.Cart.click();
         testContextSetup.genericUtils.waitUntilVisible(cartpage.Btn_PlaceOrder,30);
         testContextSetup.genericUtils.waitUntilVisible(cartpage.Lbl_Total,30);
@@ -65,10 +63,7 @@ public class StepDefi_Cart {
 
     @And("User checks out the order of product {string}")
     public void user_checks_out_the_order_of_product(String product) throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        cartpage=testContextSetup.pageObjectManager.getCartPage();
-        placeorder=testContextSetup.pageObjectManager.getPlaceOrderPage();
-        homepage=testContextSetup.pageObjectManager.getHomePage();
+
         homepage.Cart.click();
         testContextSetup.genericUtils.waitUntilVisible(cartpage.Btn_PlaceOrder,30);
         testContextSetup.genericUtils.waitUntilVisible(cartpage.Lbl_Total,30);

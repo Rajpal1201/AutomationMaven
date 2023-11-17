@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
 
@@ -19,16 +20,18 @@ public class TestBase {
         if (driver == null) {
             CommonFunctionsJava commonFunctionsJava=new CommonFunctionsJava();
             String PropBrowser= commonFunctionsJava.readProperties("Browser");
-            if (PropBrowser.equalsIgnoreCase("IE")) {
-                System.setProperty("webdriver.ie.driver", "C:\\Users\\ryadav\\Desktop\\Files\\Jars\\IEDriverServer.exe");
-                driver = new InternetExplorerDriver();
+            String browser_Maven= System.getProperty("Browser");
+            String browser= browser_Maven!=null ? browser_Maven : PropBrowser;
+            if (browser.equalsIgnoreCase("Firefox")) {
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
             }
 
             //System.setProperty("webdriver.geko.driver","C:\\Users\\ryadav\\Desktop\\Files\\Jars\\geckodriver.exe");
             //FirefoxOptions cap=new FirefoxOptions();
             //cap.setCapability("marionette", true);
             //driver=new FirefoxDriver();
-            else if (PropBrowser.equalsIgnoreCase("Chrome")) {
+            else if (browser.equalsIgnoreCase("Chrome")) {
                 //System.setProperty("webdriver.chrome.driver", "C:\\Users\\yrajp\\Work\\Jars\\chromedriver.exe");
                 WebDriverManager.chromedriver().setup();
 
@@ -42,8 +45,8 @@ public class TestBase {
 
                 driver = new ChromeDriver();
                 //WebDriverManager.chromedriver().setup();
-            } else if (PropBrowser.equalsIgnoreCase("Edge")) {
-                System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "/src/Resources/msedgedriver.exe");
+            } else if (browser.equalsIgnoreCase("Edge")) {
+                WebDriverManager.edgedriver().setup();
                 driver = new EdgeDriver();
             } else {
                 Assert.fail("Incorrect browser name");

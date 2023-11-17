@@ -14,11 +14,12 @@ public class StepDefi_SignUp {
 
     public StepDefi_SignUp(TestContextSetup testContextSetup){
         this.testContextSetup=testContextSetup;
+        homepage=testContextSetup.pageObjectManager.getHomePage();
+        signup=testContextSetup.pageObjectManager.getSignUp();
     }
     @When("User sign up into application with username {string} and password {string}")
     public void userSignUpIntoApplicationWithUsernameAndPassword(String username, String password) throws InterruptedException {
-        homepage=testContextSetup.pageObjectManager.getHomePage();
-        signup=testContextSetup.pageObjectManager.getSignUp();
+
         homepage.SignUp.click();
         Thread.sleep(2000);
         signup.Txt_SignUsername.sendKeys(username);
