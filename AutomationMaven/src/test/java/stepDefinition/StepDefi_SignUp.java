@@ -1,10 +1,9 @@
 package stepDefinition;
 
-import AutomationSelenium.AutomationMaven.pages.*;
+import AutomationSelenium.AutomationMaven.pages.HomePage;
+import AutomationSelenium.AutomationMaven.pages.SignUp;
 import Utils.TestContextSetup;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class StepDefi_SignUp {

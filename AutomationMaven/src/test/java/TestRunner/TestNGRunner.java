@@ -2,7 +2,6 @@ package TestRunner;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-import org.testng.annotations.DataProvider;
 
 //dryRun - It will just compile and will check if all the steps are implemented
 //dryRun = true
